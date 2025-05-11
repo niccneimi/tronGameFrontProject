@@ -45,6 +45,12 @@ function getContentType(ext: string): string {
   }
 }
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
+
 serve(async (req) => {
   const url = new URL(req.url);
 
@@ -69,14 +75,27 @@ serve(async (req) => {
   }
 
   if (url.pathname === "/api/scores") {
+    if (req.method === "OPTIONS") {
+      return new Response(null, {
+        status: 204,
+        headers: corsHeaders,
+      });
+    }
+
     if (req.method === "GET") {
       const limit = parseInt(url.searchParams.get("limit") ?? "10");
       const sortField = url.searchParams.get("sort_field") || "score";
       const sortAsc = url.searchParams.get("sort_asc") === "true";
+
       if (!["name", "score", "date"].includes(sortField)) {
-        return new Response(JSON.stringify({ error: "Invalid sort field" }), { status: 400, headers: { "Content-Type": "application/json" } });
+        return new Response(JSON.stringify({ error: "Invalid sort field" }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
       }
+
       let scores = await getScores();
+
       scores.sort((a, b) => {
         if (sortField === "date") {
           const da = new Date(a.date).getTime();
@@ -91,31 +110,59 @@ serve(async (req) => {
         }
         return 0;
       });
+
       scores = scores.slice(0, limit);
-      return new Response(JSON.stringify(scores), { status: 200, headers: { "Content-Type": "application/json" } });
+
+      return new Response(JSON.stringify(scores), {
+        status: 200,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     if (req.method === "POST") {
       try {
         const data = await req.json();
+
         if (!isValidName(data.name)) {
-          return new Response(JSON.stringify({ error: "Invalid name" }), { status: 400, headers: { "Content-Type": "application/json" } });
+          return new Response(JSON.stringify({ error: "Invalid name" }), {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
         }
         if (!isValidScore(data.score)) {
-          return new Response(JSON.stringify({ error: "Invalid score" }), { status: 400, headers: { "Content-Type": "application/json" } });
+          return new Response(JSON.stringify({ error: "Invalid score" }), {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
         }
-        const newScore: Score = { name: data.name.trim(), score: data.score, date: new Date().toISOString() };
+
+        const newScore: Score = {
+          name: data.name.trim(),
+          score: data.score,
+          date: new Date().toISOString(),
+        };
+
         const scores = await getScores();
         scores.push(newScore);
         scores.sort((a, b) => b.score - a.score);
         await saveScores(scores);
-        return new Response(JSON.stringify(newScore), { status: 201, headers: { "Content-Type": "application/json" } });
+
+        return new Response(JSON.stringify(newScore), {
+          status: 201,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
       } catch {
-        return new Response(JSON.stringify({ error: "Invalid JSON" }), { status: 400, headers: { "Content-Type": "application/json" } });
+        return new Response(JSON.stringify({ error: "Invalid JSON" }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
       }
     }
 
-    return new Response("Method Not Allowed", { status: 405 });
+    return new Response("Method Not Allowed", {
+      status: 405,
+      headers: corsHeaders,
+    });
   }
 
   return new Response("Not Found", { status: 404 });
