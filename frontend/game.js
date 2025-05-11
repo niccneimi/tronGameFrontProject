@@ -267,7 +267,7 @@ saveScoreBtn.addEventListener('click', () => {
   const name = playerNameInput.value.trim();
   if (!name) return alert('Введите имя');
   saveScoreBtn.disabled = true;
-  fetch('http://localhost:8000/api/scores', {
+  fetch('/api/scores', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({name, score}),
@@ -351,7 +351,7 @@ document.querySelectorAll('#scores-table th').forEach(th => {
 
 function loadScores() {
   const limit = parseInt(rowsCountSelect.value, 10);
-  fetch(`http://localhost:8000/api/scores?limit=${limit}&sort_field=${currentSort.field}&sort_asc=${currentSort.asc}`)
+  fetch(`/api/scores?limit=${limit}&sort_field=${currentSort.field}&sort_asc=${currentSort.asc}`)
     .then(res => res.json())
     .then(data => {
       scoresTableBody.innerHTML = '';
