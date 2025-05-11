@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Игра Трон</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header>
+  <h1>Игра Трон</h1>
+  <nav>
+    <button id="menu-about">Об игре</button>
+    <button id="menu-play">Играть</button>
+    <button id="menu-scores">Результаты</button>
+  </nav>
+</header>
+<main>
+  <section id="workspace">
+    <div id="about" class="hidden">
+      <h2>Об игре</h2>
+      <p>Вы управляете световым мотоциклом (Трон). Цель - продержаться как можно дольше, избегая столкновений с границами и следами. Скорость постепенно увеличивается, усложняя игру. После поражения введите имя для сохранения результата.</p>
+      <p>Источник: Игра Tron Light Cycle.</p>
+    </div>
+    <div id="game-container" class="hidden">
+      <canvas id="game" width="600" height="400"></canvas>
+      <div id="score">Очки: 0</div>
+      <div id="game-over" class="hidden">
+        <p>Игра окончена!</p>
+        <label for="player-name">Введите имя:</label>
+        <input type="text" id="player-name" maxlength="20" />
+        <button id="save-score">Сохранить результат</button>
+      </div>
+    </div>
+    <div id="scores-container" class="hidden">
+      <h2>Таблица рекордов</h2>
+      <label for="rows-count">Показать строк:</label>
+      <select id="rows-count">
+        <option value="10" selected>10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+      <table id="scores-table">
+        <thead>
+          <tr>
+            <th data-sort="rank">#</th>
+            <th data-sort="name">Имя</th>
+            <th data-sort="score">Очки</th>
+            <th data-sort="date">Дата</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<footer>
+  <p>2025 Игра Трон.</p>
+</footer>
+<script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+name: Deploy to Deno Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Deploy to Deno Deploy
+        uses: denoland/deno_deploy_action@v1
+        with:
+          project: "your-deno-deploy-project-name"
+          token: ${{ secrets.DENO_DEPLOY_TOKEN }}
+          entrypoint: "main.ts"

@@ -1,0 +1,128 @@
+* {
+    box-sizing: border-box;
+  }
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background: #000;
+    color: #eee;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    background: #111;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  header h1 {
+    margin: 0;
+    font-weight: normal;
+  }
+  nav button {
+    background: #222;
+    border: none;
+    color: #eee;
+    padding: 8px 15px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+  }
+  nav button:hover, nav button.active {
+    background: #0ff;
+    color: #000;
+  }
+  main {
+    flex-grow: 1;
+    padding: 20px;
+    background: #111;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  #workspace {
+    width: 640px;
+  }
+  .hidden {
+    display: none;
+  }
+  #game-container {
+    position: relative;
+  }
+  #game {
+    background: #000;
+    display: block;
+    border: 2px solid #0ff;
+    margin-bottom: 10px;
+  }
+  #score {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  #game-over {
+    background: rgba(0,0,0,0.85);
+    color: #0ff;
+    padding: 15px;
+    border: 2px solid #0ff;
+    text-align: center;
+    border-radius: 5px;
+  }
+  #game-over input {
+    padding: 5px;
+    font-size: 1rem;
+    margin: 10px 0;
+    width: 80%;
+    border: none;
+    border-radius: 3px;
+  }
+  #game-over button {
+    background: #0ff;
+    border: none;
+    color: #000;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 3px;
+  }
+  #scores-container {
+    color: #0ff;
+  }
+  #scores-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  #scores-table th, #scores-table td {
+    border: 1px solid #0ff;
+    padding: 6px 8px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+  }
+  #scores-table th:hover {
+    background: #0ff;
+    color: #000;
+  }
+  #rows-count {
+    margin-left: 10px;
+    padding: 3px 6px;
+    font-size: 1rem;
+    border-radius: 3px;
+    border: none;
+    background: #222;
+    color: #eee;
+  }
+  footer {
+    background: #111;
+    color: #555;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 0.9rem;
+  }
+  
