@@ -38,7 +38,7 @@ let trail = [];
 let head;
 let collisionPoints = [];
 
-const maxTailLength = 50;
+const maxTailLength = 100;
 
 let bot = {
   head: {x: width / 4, y: height / 4},
@@ -48,7 +48,7 @@ let bot = {
   nextDirection: directions.ArrowRight,
   score: 0,
 };
-const maxTailLengthBot = 50;
+const maxTailLengthBot = 100;
 
 function resetGame() {
   speed = 200;
