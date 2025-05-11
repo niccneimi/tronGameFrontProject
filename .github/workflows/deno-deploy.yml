@@ -3,17 +3,25 @@ name: Deploy to Deno Deploy
 on:
   push:
     branches:
-      - main
+      - main  # или ваша основная ветка
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
 
       - name: Deploy to Deno Deploy
-        uses: denoland/deno_deploy_action@v1
+        uses: denoland/deployctl@v1
         with:
-          project: "your-deno-deploy-project-name"
-          token: ${{ secrets.DENO_DEPLOY_TOKEN }}
-          entrypoint: "main.ts"
+          project: niccneimi-trongamefro-72
+          entrypoint: main.ts
